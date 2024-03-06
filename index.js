@@ -34,11 +34,11 @@ app.get("/:formId/filteredResponses", async (req, res) => {
       (response) => {
         // Filtering logic here
         const conditionInclude = includeEditLink ? response.editLink : true;
-        const conditionStatus =
-          status === "finished"
-            ? new Date(response.lastUpdatedAt).getTime() < new Date().getTime()
-            : new Date(response.lastUpdatedAt).getTime() >=
-              new Date().getTime();
+        const conditionStatus = !status
+          ? true
+          : status === "finished"
+          ? new Date(response.lastUpdatedAt).getTime() < new Date().getTime()
+          : new Date(response.lastUpdatedAt).getTime() >= new Date().getTime();
         const subDate = new Date(response.submissionTime);
         const after = new Date(afterDate);
         const before = new Date(beforeDate);
